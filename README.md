@@ -47,10 +47,10 @@ The follow operations are used in the computation:
 	* Superword `ft` is loaded from the fetch pointer.
 	* `st` is stored to the store pointer.
 	* `ld` is `XOR`ed into `state0`.
-	* `state0` as `AES`ed.
+	* `state0` is `AES`ed.
 	* `state3` is `XOR`ed into `state0`.
 	* `st` is `XOR`ed into `state1`.
-	* `state1` as `AES`ed.
+	* `state1` is `AES`ed.
 	* `ft` is `XOR`ed into `state1`.
 	* `state3` is `ADD`ed to `state2`.
 	* `ld` and `st` are each moved 4 words forward.
