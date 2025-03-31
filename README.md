@@ -37,25 +37,25 @@ The follow operations are used in the computation:
 
 `r` rounds run as follows:
 
-	* The Store and Load pointers start each round at the value they had at the end of the previous round.
-	* The Fetch pointer is set to be `o` words ahead of the Store pointer.
-	* The lower 128 bit word of `state0` is `XOR`ed with the lower 128 bits of the `Tweak` in little endian.
-	* Similarly the following three words of `state0` are `XOR`ed with the lower 128 bits of `Tweak+1`, `Tweak+2` and `Tweak+3` respectively. If `Tweak+3` is too large to fit in a 128 bit value then the overflowing bits are `XOR`ed into `state1`, then `state2` etc. If 1408 bits isn't enough continue with superwords from the `Base`, starting at the Load pointer. (While there is no definite limit to how large the `Tweak` value may get, practical implementations can generally compute a bound that will not be reached before running out of address space.)
-	* Then `l` steps run as follow:
-		* Superword `ld` is loaded from the load pointer.
-		* Superword `st` is produced by `ADD`ing `ld` to `state3`.
-		* Superword `ft` is loaded from the fetch pointer.
-		* `st` is stored to the store pointer.
-		* `ld` is `XOR`ed into `state0`.
-		* `state0` as `AES`ed.
-		* `state3` is `XOR`ed into `state0`.
-		* `st` is `XOR`ed into `state1`.
-		* `state1` as `AES`ed.
-		* `ft` is `XOR`ed into `state1`.
-		* `state3` is `ADD`ed to `state2`.
-		* `ld` and `st` are each moved 4 words forward.
-		* `ft` is moved 5 words backwards.
-		* The `State` is rotated 3 superwords backwards, so `state0` becomes `state8`, `state1` becomes `state9`, `state2` becomes `state10`, `state3` becomes `state0` etc.
+* The Store and Load pointers start each round at the value they had at the end of the previous round.
+* The Fetch pointer is set to be `o` words ahead of the Store pointer.
+* The lower 128 bit word of `state0` is `XOR`ed with the lower 128 bits of the `Tweak` in little endian.
+* Similarly the following three words of `state0` are `XOR`ed with the lower 128 bits of `Tweak+1`, `Tweak+2` and `Tweak+3` respectively. If `Tweak+3` is too large to fit in a 128 bit value then the overflowing bits are `XOR`ed into `state1`, then `state2` etc. If 1408 bits isn't enough continue with superwords from the `Base`, starting at the Load pointer. (While there is no definite limit to how large the `Tweak` value may get, practical implementations can generally compute a bound that will not be reached before running out of address space.)
+* Then `l` steps run as follow:
+	* Superword `ld` is loaded from the load pointer.
+	* Superword `st` is produced by `ADD`ing `ld` to `state3`.
+	* Superword `ft` is loaded from the fetch pointer.
+	* `st` is stored to the store pointer.
+	* `ld` is `XOR`ed into `state0`.
+	* `state0` as `AES`ed.
+	* `state3` is `XOR`ed into `state0`.
+	* `st` is `XOR`ed into `state1`.
+	* `state1` as `AES`ed.
+	* `ft` is `XOR`ed into `state1`.
+	* `state3` is `ADD`ed to `state2`.
+	* `ld` and `st` are each moved 4 words forward.
+	* `ft` is moved 5 words backwards.
+	* The `State` is rotated 3 superwords backwards, so `state0` becomes `state8`, `state1` becomes `state9`, `state2` becomes `state10`, `state3` becomes `state0` etc.
 
 ### Initialisation
 
