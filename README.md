@@ -36,6 +36,7 @@ The follow operations are used in the computation:
 `AES` - A superword is considered as four 128 bit words, each word is transformed by applying a single AES encryption round, without the AddRoundKey step.
 
 `r` rounds run as follows:
+
 	* The Store and Load pointers start each round at the value they had at the end of the previous round.
 	* The Fetch pointer is set to be `o` words ahead of the Store pointer.
 	* The lower 128 bit word of `state0` is `XOR`ed with the lower 128 bits of the `Tweak` in little endian.
